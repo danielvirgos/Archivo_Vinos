@@ -18,4 +18,14 @@
     <string name="read_ok">""File without content""</string>
     <string name="read_no">File could not be read</string>
     <string name="file_name">archivo.txt</string>
+    <string name="check_id">Introduce un Id de vino</string>
+    <string name="checar_id">CLICK</string>
+    <string name="btcancelar">cancelar</string>
+    <string name="btaceptar">aceptar</string>
+    <string name="nombre">Nombre</string>
+    <string name="bodega">Bodega</string>
+    <string name="color">Color</string>
+    <string name="origen">Origen</string>
+    <string name="fecha">Fecha</string>
+    <string name="graduacion">Graduación</string>
 </resources>

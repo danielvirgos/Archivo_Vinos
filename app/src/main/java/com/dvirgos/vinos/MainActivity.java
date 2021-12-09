@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         Vino v = new Vino(1,"Betis", "Man que pierda", "Verde", "Benito VillaMarin", 31082020, 2.5);
         String csv = Csv.getCsv(v);
         Log.v("zzzz", csv);
+        Vino v2 = new Vino(1,"Betis", "Man que pierda", "Verde", "Benito VillaMarin", 31082020, 2.5);
 
         //Hacer una apliacion que nos muestre los vinos guardados en el archivo csv
         //Con un boton add que nos permita añadir mas vinos, si el id del vino esta repetido, no nos permite crearlo

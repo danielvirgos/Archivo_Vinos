@@ -1,5 +1,6 @@
 package com.dvirgos.vinos.util;
 
+import android.content.Context;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,6 +15,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Csv {
+
+    private static final String TAG = "xyzyx";
+    private String fileName;
 
     public static Vino getVino(String str) {
         String[] atributos = str.split(",");
@@ -47,6 +51,74 @@ public class Csv {
                 v.getOrigen() + "; " +
                 v.getGraduacion() + "; " +
                 v.getFecha();
+    }
+
+    private boolean writeFile(File file, String fileName, String string) {
+        //https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
+        File f = new File(file, fileName);
+        FileWriter fw = null;
+        boolean ok = true;
+        try {
+            fw = new FileWriter(f, true);
+            fw.write(string);
+            fw.write("\n");
+            fw.flush();
+            fw.close();
+        } catch (IOException e) {
+            ok = false;
+            Log.v(TAG, e.toString());
+        }
+        return ok;
+    }
+
+    private String writeResult(boolean result) {
+        String mensaje = String.valueOf((R.string.message_ok));
+        if(!result) {
+            mensaje = String.valueOf((R.string.message_no));
+        }
+        return mensaje;
+    }
+
+    private void writeInternalFile(Context context, String text) {
+        //String text = etText.getText().toString();
+        writeResult(writeFile(context.getFilesDir(), fileName, text));
+    }
+
+    private String readFile(File file, String fileName) {
+        //https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
+        File f = new File(file, fileName);
+        String texto = "";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(f));
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                texto += linea + "\n";
+            }
+            br.close();
+        } catch (IOException e) {
+            texto = null;
+            Log.v(TAG, e.toString());
+        }
+        return texto;
+    }
+
+    private String writeReadResult(String result) {
+        String string = result;
+        if(result == null) {
+            string = String.valueOf((R.string.read_no));
+        } else if(result.isEmpty()) {
+            string = String.valueOf((R.string.read_ok));
+        }
+        //tvText.setText(string);
+        return result;
+    }
+
+    private void readInternalFle(Context context) {
+        writeReadResult(readFile(context.getFilesDir(), fileName));
+    }
+
+    private boolean compruebaId(Context context, String id) {
+        return false;
     }
 
 
