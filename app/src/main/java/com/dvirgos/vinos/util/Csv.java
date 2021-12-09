@@ -17,7 +17,7 @@ import java.io.IOException;
 public class Csv {
 
     private static final String TAG = "xyzyx";
-    private String fileName;
+    private String fileName = String.valueOf((R.string.file_name));
 
     public static Vino getVino(String str) {
         String[] atributos = str.split(",");
@@ -53,7 +53,7 @@ public class Csv {
                 v.getFecha();
     }
 
-    private boolean writeFile(File file, String fileName, String string) {
+    public boolean writeFile(File file, String fileName, String string) {
         //https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
         File f = new File(file, fileName);
         FileWriter fw = null;
@@ -71,7 +71,7 @@ public class Csv {
         return ok;
     }
 
-    private String writeResult(boolean result) {
+    public String writeResult(boolean result) {
         String mensaje = String.valueOf((R.string.message_ok));
         if(!result) {
             mensaje = String.valueOf((R.string.message_no));
@@ -79,12 +79,12 @@ public class Csv {
         return mensaje;
     }
 
-    private void writeInternalFile(Context context, String text) {
+    public void writeInternalFile(Context context, String text) {
         //String text = etText.getText().toString();
         writeResult(writeFile(context.getFilesDir(), fileName, text));
     }
 
-    private String readFile(File file, String fileName) {
+    public String readFile(File file, String fileName) {
         //https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
         File f = new File(file, fileName);
         String texto = "";
@@ -102,7 +102,7 @@ public class Csv {
         return texto;
     }
 
-    private String writeReadResult(String result) {
+    public String writeReadResult(String result) {
         String string = result;
         if(result == null) {
             string = String.valueOf((R.string.read_no));
@@ -113,13 +113,36 @@ public class Csv {
         return result;
     }
 
-    private void readInternalFle(Context context) {
-        writeReadResult(readFile(context.getFilesDir(), fileName));
+    public String readInternalFle(Context context) {
+        String string = writeReadResult(readFile(context.getFilesDir(), fileName));
+        return string;
     }
 
-    private boolean compruebaId(Context context, String id) {
-        return false;
+    public Vino[] readFileArray(File file, String fileName) {
+        int i = 0;
+        Vino[] vino = new Vino[0];
+        //https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
+        File f = new File(file, fileName);
+        String texto = "";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(f));
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                texto += linea + "\n";
+                vino[i] = getVino(texto);
+                i++;
+            }
+            br.close();
+        } catch (IOException e) {
+            texto = null;
+            Log.v(TAG, e.toString());
+        }
+        return vino;
     }
 
+    public Vino[] readInternalFleArray(Context context) {
+        Vino[] vino = readFileArray(context.getFilesDir(), fileName);
+        return vino;
+    }
 
 }

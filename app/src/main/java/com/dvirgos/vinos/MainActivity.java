@@ -2,14 +2,24 @@ package com.dvirgos.vinos;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.dvirgos.vinos.data.Vino;
 import com.dvirgos.vinos.util.Csv;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class MainActivity extends AppCompatActivity {
 
+    private TextView textView;
+    TextInputLayout tlid;
+    Csv csv;
+    Vino[] vino = new Vino[0];
+    Button btAdd, btEdit;
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,15 +28,41 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void init() {
-        Vino v = new Vino(1,"Betis", "Man que pierda", "Verde", "Benito VillaMarin", 31082020, 2.5);
-        String csv = Csv.getCsv(v);
-        Log.v("zzzz", csv);
-        Vino v2 = new Vino(1,"Betis", "Man que pierda", "Verde", "Benito VillaMarin", 31082020, 2.5);
+        String string = csv.readInternalFle(this);
+        textView = findViewById(R.id.tvExplicativo);
+        tlid = findViewById(R.id.texInLaId);
+        btAdd = findViewById(R.id.btAdd);
+        btEdit = findViewById(R.id.btEdit);
+        double id = Double.parseDouble(tlid.toString());
+        context = this;
+        btEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                vino = csv.readInternalFleArray(context);
+                if(comprueboId(vino, id)){
+                    startEditVino(id);
+                } else {
+                    textView.setText("Este id no existe");
+                }
+            }
+        });
+    }
 
-        //Hacer una apliacion que nos muestre los vinos guardados en el archivo csv
-        //Con un boton add que nos permita añadir mas vinos, si el id del vino esta repetido, no nos permite crearlo
-        //También añadimos un boton de editar, que nos busque el id que hemos introducido y podamos editar el vino
-        //En la seccion de edición, ponemos un boton de borrar
+    private void startEditVino(double id) {
+
+    }
+
+    private boolean comprueboId(Vino[] vino, double id) {
+        Boolean boleano = false;
+        for (int i = 0; i<vino.length; i++) {
+            double auxId = vino[i].getId();
+            if (auxId == id) {
+                boleano = true;
+            } else {
+                boleano = false;
+            }
+        }
+        return boleano;
     }
 
 }

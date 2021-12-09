@@ -28,4 +28,6 @@
     <string name="origen">Origen</string>
     <string name="fecha">Fecha</string>
     <string name="graduacion">Graduación</string>
+    <string name="btborrar">borrar</string>
+    <string name="comrpuebaid">Comprobar id existente</string>
 </resources>
