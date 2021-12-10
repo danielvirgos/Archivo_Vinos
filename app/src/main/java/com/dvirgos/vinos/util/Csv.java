@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Csv {
 
@@ -43,7 +44,7 @@ public class Csv {
         return v;
     }
 
-    public static String getCsv (Vino v) {
+    public String getCsv (Vino v) {
         return v.getId() + "; " +
                 v.getNombre() + "; " +
                 v.getBodega() + "; " +
@@ -118,9 +119,9 @@ public class Csv {
         return string;
     }
 
-    public Vino[] readFileArray(File file, String fileName) {
+    public ArrayList<Vino> readFileArray(File file, String fileName) {
         int i = 0;
-        Vino[] vino = new Vino[0];
+        ArrayList<Vino> vino = new ArrayList<Vino>();
         //https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
         File f = new File(file, fileName);
         String texto = "";
@@ -129,7 +130,7 @@ public class Csv {
             String linea;
             while ((linea = br.readLine()) != null) {
                 texto += linea + "\n";
-                vino[i] = getVino(texto);
+                vino.add(i, getVino(texto));
                 i++;
             }
             br.close();
@@ -140,8 +141,8 @@ public class Csv {
         return vino;
     }
 
-    public Vino[] readInternalFleArray(Context context) {
-        Vino[] vino = readFileArray(context.getFilesDir(), fileName);
+    public ArrayList<Vino> readInternalFleArray(Context context) {
+        ArrayList<Vino> vino = readFileArray(context.getFilesDir(), fileName);
         return vino;
     }
 
