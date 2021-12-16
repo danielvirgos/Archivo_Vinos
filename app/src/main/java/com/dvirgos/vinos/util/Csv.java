@@ -23,7 +23,7 @@ public class Csv {
     public static Vino getVino(String str) {
         String[] atributos = str.split(",");
         Vino v = new Vino();
-        if( atributos.length >= 6 ) {
+        if( atributos.length >= 7 ) {
             try {
                 v.setId(Long.parseLong(atributos[0].trim()));
             } catch (Exception e) {
@@ -54,7 +54,7 @@ public class Csv {
                 v.getFecha();
     }
 
-    public boolean writeFile(File file, String fileName, String string) {
+    public void writeFile(File file, String fileName, String string) {
         //https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
         File f = new File(file, fileName);
         FileWriter fw = null;
@@ -69,7 +69,6 @@ public class Csv {
             ok = false;
             Log.v(TAG, e.toString());
         }
-        return ok;
     }
 
     public String writeResult(boolean result) {
@@ -82,7 +81,7 @@ public class Csv {
 
     public void writeInternalFile(Context context, String text) {
         //String text = etText.getText().toString();
-        writeResult(writeFile(context.getFilesDir(), fileName, text));
+        writeFile(context.getFilesDir(), fileName, text);
     }
 
     public String readFile(File file, String fileName) {
@@ -120,24 +119,23 @@ public class Csv {
     }
 
     public ArrayList<Vino> readFileArray(File file, String fileName) {
-        int i = 0;
-        ArrayList<Vino> vino = new ArrayList<Vino>();
-        //https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
+        ArrayList<Vino> vino = new ArrayList<>();
         File f = new File(file, fileName);
         String texto = "";
         try {
             BufferedReader br = new BufferedReader(new FileReader(f));
             String linea;
             while ((linea = br.readLine()) != null) {
-                texto += linea + "\n";
-                vino.add(i, getVino(texto));
-                i++;
+                //texto += linea + "\n";
+                Log.v("zzzz", "Leo array: "+getVino(linea).toString());
+                vino.add(getVino(linea));
             }
             br.close();
         } catch (IOException e) {
             texto = null;
             Log.v(TAG, e.toString());
         }
+        Log.v("zzzz", "arraylist"+vino.get(0).toString());
         return vino;
     }
 

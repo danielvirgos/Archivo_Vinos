@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.dvirgos.vinos.data.Vino;
 import com.dvirgos.vinos.util.Csv;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
@@ -21,9 +22,9 @@ public class AddVinos extends AppCompatActivity {
     Vino vinito = new Vino();
     private Button btacept, btCancel;
     private TextView tvText;
-    Csv csv;
+    Csv csv = new Csv();
     Context context;
-    private TextInputLayout tlnombre, tlbodega, tlorigen, tlcolor, tlfecha, tlgraduacion;
+    private TextInputEditText tlnombre, tlbodega, tlorigen, tlcolor, tlfecha, tlgraduacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,19 +36,20 @@ public class AddVinos extends AppCompatActivity {
     private void init() {
         //ViewModel
         Bundle bundle = getIntent().getExtras();
-        double id;
-        id = bundle.getDouble("valorBundle");
+        long id;
+        id = bundle.getLong("valorBundle");
         vino = csv.readInternalFleArray(this);
 
-        tlbodega = findViewById(R.id.texInLaBodegaadd);
-        tlcolor = findViewById(R.id.texInLaColoradd);
-        tlnombre = findViewById(R.id.texInLaNombreadd);
-        tlorigen = findViewById(R.id.texInLaOrigenadd);
-        tlfecha = findViewById(R.id.texInLaFechaadd);
-        tlgraduacion = findViewById(R.id.texInLaGraduacionadd);
+        tlbodega = findViewById(R.id.textineditBodegadd);
+        tlcolor = findViewById(R.id.textineditColoradd);
+        tlnombre = findViewById(R.id.textineditNomadd);
+        tlorigen = findViewById(R.id.textineditOrigenadd);
+        tlfecha = findViewById(R.id.textineditFehcadd);
+        tlgraduacion = findViewById(R.id.textineditGraduadd);
 
         btacept = findViewById(R.id.btAddAcept);
         btCancel = findViewById(R.id.btAddCancel);
+        context = this;
 
         btCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,15 +60,19 @@ public class AddVinos extends AppCompatActivity {
         btacept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                vinito.setColor(tlcolor.toString());
-                vinito.setNombre(tlnombre.toString());
-                vinito.setBodega(tlbodega.toString());
-                vinito.setOrigen(tlorigen.toString());
-                vinito.setGraduacion(Double.parseDouble(tlgraduacion.toString()));
-                vinito.setFecha(Integer.parseInt(tlfecha.toString()));
-                vino.add(vinito);
+                vinito.setId(id);
+                vinito.setColor(tlcolor.getText().toString());
+                vinito.setNombre(tlnombre.getText().toString());
+                vinito.setBodega(tlbodega.getText().toString());
+                vinito.setOrigen(tlorigen.getText().toString());
+                vinito.setGraduacion(Double.parseDouble(tlgraduacion.getText().toString()));
+                vinito.setFecha(Integer.parseInt(tlfecha.getText().toString()));
+                String strvinito = csv.getCsv(vinito);
+                csv.writeInternalFile(context, strvinito);
+                //vino.add(vinito);
 
-                creoVinito();
+                //creoVinito();
+                volverActivity();
             }
         });
     }

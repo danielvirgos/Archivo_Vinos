@@ -26,6 +26,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline3">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textineditNom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/nombre" />
@@ -43,6 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/texInLaNombre">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textineditBodega"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/bodega" />
@@ -60,6 +62,7 @@
         app:layout_constraintTop_toBottomOf="@+id/texInLaBodega">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textineditColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/color" />
@@ -77,6 +80,7 @@
         app:layout_constraintTop_toBottomOf="@+id/texInLaColor">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textineditOrigen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/origen" />
@@ -94,6 +98,7 @@
         app:layout_constraintTop_toBottomOf="@+id/texInLaOrigen">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textineditFecha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/fecha" />
@@ -111,6 +116,7 @@
         app:layout_constraintTop_toBottomOf="@+id/texInLaFecha">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textineditGraduacion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/graduacion" />
