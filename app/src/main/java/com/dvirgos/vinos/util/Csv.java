@@ -21,22 +21,22 @@ public class Csv {
     private String fileName = String.valueOf((R.string.file_name));
 
     public static Vino getVino(String str) {
-        String[] atributos = str.split(",");
+        String[] vinos = str.split(";");
         Vino v = new Vino();
-        if( atributos.length >= 7 ) {
+        if( vinos.length >= 7 ) {
             try {
-                v.setId(Long.parseLong(atributos[0].trim()));
+                v.setId(Long.parseLong(vinos[0].trim()));
             } catch (Exception e) {
             }
-            v.setNombre(atributos[1].trim());
-            v.setBodega(atributos[2].trim());
-            v.setColor(atributos[3].trim());
-            v.setOrigen(atributos[4].trim());
+            v.setNombre(vinos[1].trim());
+            v.setBodega(vinos[2].trim());
+            v.setColor(vinos[3].trim());
+            v.setOrigen(vinos[4].trim());
             try {
-                v.setFecha(Integer.parseInt(atributos[5].trim()));
+                v.setFecha(Integer.parseInt(vinos[5].trim()));
             }catch (Exception e) {
             }try {
-                v.setGraduacion(Double.parseDouble(atributos[6].trim()));
+                v.setGraduacion(Double.parseDouble(vinos[6].trim()));
             } catch (Exception e) {
             }
         }
@@ -49,9 +49,9 @@ public class Csv {
                 v.getNombre() + "; " +
                 v.getBodega() + "; " +
                 v.getColor() + "; " +
-                v.getOrigen() + "; " +
-                v.getGraduacion() + "; " +
-                v.getFecha();
+                v.getOrigen() + "; " +   
+                v.getFecha() + "; " +
+                v.getGraduacion();
     }
 
     public void writeFile(File file, String fileName, String string) {
@@ -80,7 +80,7 @@ public class Csv {
     }
 
     public void writeInternalFile(Context context, String text) {
-        //String text = etText.getText().toString();
+
         writeFile(context.getFilesDir(), fileName, text);
     }
 
@@ -109,7 +109,7 @@ public class Csv {
         } else if(result.isEmpty()) {
             string = String.valueOf((R.string.read_ok));
         }
-        //tvText.setText(string);
+
         return result;
     }
 
@@ -126,7 +126,7 @@ public class Csv {
             BufferedReader br = new BufferedReader(new FileReader(f));
             String linea;
             while ((linea = br.readLine()) != null) {
-                //texto += linea + "\n";
+
                 Log.v("zzzz", "Leo array: "+getVino(linea).toString());
                 vino.add(getVino(linea));
             }
@@ -135,7 +135,7 @@ public class Csv {
             texto = null;
             Log.v(TAG, e.toString());
         }
-        Log.v("zzzz", "arraylist"+vino.get(0).toString());
+        //Log.v("zzzz", "arraylist"+vino.get(0).toString());
         return vino;
     }
 
