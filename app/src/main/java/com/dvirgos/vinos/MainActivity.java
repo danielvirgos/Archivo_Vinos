@@ -85,7 +85,8 @@ public class MainActivity extends AppCompatActivity {
     private void startEditVino(long id) {
         Intent intencion = new Intent(this, EditVinos.class);
         Bundle bundle = new Bundle();
-        bundle.putDouble("valorBundle", id);
+        bundle.putLong("valorBundle", id);
+        Log.v("zzzz", "Main"+id);
         intencion.putExtras(bundle);
         startActivity(intencion);
     }
